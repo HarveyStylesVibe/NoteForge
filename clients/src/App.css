@@ -2,7 +2,8 @@
 @import "tailwindcss";
 
 /* ---- Dark theme (default) ---- */
-:root {
+:root,
+[data-theme="dark"] {
   --bg-primary: #0a0a0b;
   --bg-secondary: #141416;
   --bg-tertiary: #1c1c1f;
@@ -21,6 +22,28 @@
   --radius: 0.75rem;
   --radius-sm: 0.5rem;
   --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* ---- Light theme (base: #f6e9d7) ---- */
+[data-theme="light"] {
+  --bg-primary: #f6e9d7;
+  --bg-secondary: #efe0cc;
+  --bg-tertiary: #e8d5bc;
+  --bg-card: #f0e2d0;
+  --bg-card-hover: #e8d5bc;
+  --border-subtle: #ddc9b0;
+  --border-default: #c9b89a;
+  --text-primary: #1c1c1f;
+  --text-secondary: #3f3f46;
+  --text-muted: #71717a;
+  --accent: #7c3aed;
+  --accent-hover: #8b5cf6;
+  --accent-muted: rgba(124, 58, 237, 0.12);
+  --success: #16a34a;
+  --warning: #ca8a04;
+  --radius: 0.75rem;
+  --radius-sm: 0.5rem;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
 }
 
 @layer base {

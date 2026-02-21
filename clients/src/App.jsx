@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./utils/AuthContext";
+import { ThemeProvider } from "./utils/ThemeContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute.jsx";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
@@ -12,8 +13,9 @@ import "./App.css";
 
 const App = () => {
   return (
-    <AuthProvider>
-      <Router>
+    <ThemeProvider>
+      <AuthProvider>
+        <Router>
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -22,8 +24,9 @@ const App = () => {
           <Route path="/dashboard/*" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         </Routes>
         <Footer />
-      </Router>
-    </AuthProvider>
+        </Router>
+      </AuthProvider>
+    </ThemeProvider>
   );
 };
 
