@@ -11,12 +11,7 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log("Name:", name);
-    console.log("Email:", email);
-    console.log("Password:", password);
-
-    login();
+    login({ name, email });
     navigate("/");
   };
 
