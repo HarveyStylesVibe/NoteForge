@@ -22,8 +22,8 @@ const Navbar = () => {
 
   const handleLogout = () => {
     setDropdownOpen(false);
-    logout();
     navigate("/");
+    logout();
   };
 
   const initials = getAuthInitials(user);
