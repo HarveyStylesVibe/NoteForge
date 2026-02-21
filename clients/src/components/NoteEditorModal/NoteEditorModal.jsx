@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { HiXMark, HiOutlineTag, HiOutlineBookmark } from "react-icons/hi2";
+import { TAG_COLORS, getTagColor, normalizeTag } from "../../utils/tagColors";
 
 const NoteEditorModal = ({ open, onClose, note, onSave }) => {
   const [title, setTitle] = useState("");
@@ -7,6 +8,7 @@ const NoteEditorModal = ({ open, onClose, note, onSave }) => {
   const [isPinned, setIsPinned] = useState(false);
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
+  const [tagColorId, setTagColorId] = useState(TAG_COLORS[0].id);
 
   useEffect(() => {
     if (open) {
@@ -14,7 +16,7 @@ const NoteEditorModal = ({ open, onClose, note, onSave }) => {
         setTitle(note.title || "");
         setContent(note.content ?? note.snippet ?? "");
         setIsPinned(!!note.isPinned);
-        setTags(Array.isArray(note.tags) ? [...note.tags] : []);
+        setTags((Array.isArray(note.tags) ? note.tags : []).map(normalizeTag).filter(Boolean));
       } else {
         setTitle("");
         setContent("");
@@ -22,6 +24,7 @@ const NoteEditorModal = ({ open, onClose, note, onSave }) => {
         setTags([]);
       }
       setTagInput("");
+      setTagColorId(TAG_COLORS[0].id);
     }
   }, [open, note]);
 
@@ -29,11 +32,12 @@ const NoteEditorModal = ({ open, onClose, note, onSave }) => {
     e?.preventDefault();
     const label = tagInput.trim();
     if (!label) return;
-    if (tags.some((t) => (typeof t === "string" ? t : t.label).toLowerCase() === label.toLowerCase())) {
+    const normalized = tags.map(normalizeTag).filter(Boolean);
+    if (normalized.some((t) => t.label.toLowerCase() === label.toLowerCase())) {
       setTagInput("");
       return;
     }
-    setTags((prev) => [...prev, label]);
+    setTags((prev) => [...prev, { label, color: tagColorId }]);
     setTagInput("");
   };
 
@@ -50,7 +54,10 @@ const NoteEditorModal = ({ open, onClose, note, onSave }) => {
       snippet,
       updatedAt: new Date().toISOString(),
       isPinned: !!isPinned,
-      tags: [...tags],
+      isFavorite: note?.isFavorite ?? false,
+      isDeleted: note?.isDeleted ?? false,
+      deletedAt: note?.deletedAt,
+      tags: tags.map((t) => (typeof t === "string" ? { label: t, color: TAG_COLORS[0].id } : t)),
     };
     onSave(payload);
     onClose();
@@ -132,11 +139,13 @@ const NoteEditorModal = ({ open, onClose, note, onSave }) => {
             </label>
             <div className="flex flex-wrap gap-2 mb-2">
               {tags.map((t, i) => {
-                const label = typeof t === "string" ? t : t.label;
+                const { label, color: colorId } = typeof t === "string" ? { label: t, color: TAG_COLORS[0].id } : t;
+                const { bg, text } = getTagColor(colorId);
                 return (
                   <span
                     key={`${label}-${i}`}
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-[var(--accent-muted)] text-[var(--accent)] border border-[var(--border-subtle)]"
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium border border-[var(--border-subtle)]"
+                    style={{ backgroundColor: bg, color: text }}
                   >
                     {label}
                     <button
@@ -160,6 +169,20 @@ const NoteEditorModal = ({ open, onClose, note, onSave }) => {
                 placeholder="Add tag..."
                 className="input-dark flex-1 min-w-[120px] px-3 py-2 text-sm"
               />
+              <div className="flex items-center gap-1" title="Tag color">
+                {TAG_COLORS.map((c) => (
+                  <button
+                    key={c.id}
+                    type="button"
+                    onClick={() => setTagColorId(c.id)}
+                    className={`w-6 h-6 rounded-full border-2 transition-all ${
+                      tagColorId === c.id ? "border-[var(--text-primary)] scale-110" : "border-transparent opacity-70 hover:opacity-100"
+                    }`}
+                    style={{ backgroundColor: c.text }}
+                    aria-label={`Color ${c.id}`}
+                  />
+                ))}
+              </div>
               <button
                 type="button"
                 onClick={handleAddTag}

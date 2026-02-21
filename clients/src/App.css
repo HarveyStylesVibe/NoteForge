@@ -36,9 +36,9 @@
   --text-primary: #1c1c1f;
   --text-secondary: #3f3f46;
   --text-muted: #71717a;
-  --accent: #7c3aed;
-  --accent-hover: #8b5cf6;
-  --accent-muted: rgba(124, 58, 237, 0.12);
+  --accent: #d99a85;
+  --accent-hover: #c98a75;
+  --accent-muted: rgba(217, 154, 133, 0.2);
   --success: #16a34a;
   --warning: #ca8a04;
   --radius: 0.75rem;
@@ -95,7 +95,7 @@
     box-shadow: 0 0 0 3px var(--accent-muted);
   }
 
-  /* Glow for primary buttons only (not links) */
+  /* Glow for primary buttons only (not links) - dark theme */
   .btn-glow {
     box-shadow: 0 0 20px rgba(167, 139, 250, 0.4);
   }
@@ -104,5 +104,16 @@
   }
   .btn-glow:focus-visible {
     box-shadow: 0 0 0 3px var(--accent-muted), 0 0 24px rgba(167, 139, 250, 0.45);
+  }
+
+  /* Light theme: terracotta glow */
+  [data-theme="light"] .btn-glow {
+    box-shadow: 0 0 20px rgba(217, 154, 133, 0.35);
+  }
+  [data-theme="light"] .btn-glow:hover {
+    box-shadow: 0 0 28px rgba(217, 154, 133, 0.45);
+  }
+  [data-theme="light"] .btn-glow:focus-visible {
+    box-shadow: 0 0 0 3px var(--accent-muted), 0 0 24px rgba(217, 154, 133, 0.4);
   }
 }
