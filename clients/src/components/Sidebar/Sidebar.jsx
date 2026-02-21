@@ -35,7 +35,11 @@ const Sidebar = () => {
       <div className="mt-auto p-3 border-t border-[var(--border-subtle)]">
         <Link
           to="/dashboard/settings"
-          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-[var(--text-muted)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-link-hover)] transition-colors"
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+            location.pathname.endsWith("/settings")
+              ? "bg-[var(--accent-muted)] text-[var(--accent)]"
+              : "text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-link-hover)]"
+          }`}
         >
           <HiOutlineCog className="w-5 h-5 shrink-0" />
           Settings

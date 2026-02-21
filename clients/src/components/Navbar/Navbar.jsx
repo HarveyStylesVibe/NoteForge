@@ -52,7 +52,7 @@ const Navbar = () => {
             to="/dashboard"
             className="text-[var(--text-secondary)] hover:text-[var(--text-link-hover)] transition font-medium"
           >
-            Dashboard
+            {user?.name?.trim() || (user?.email && user.email.split("@")[0]) || "Dashboard"}
           </Link>
         )}
         {location.pathname !== "/login" && location.pathname !== "/signup" && !isAuthenticated && (
