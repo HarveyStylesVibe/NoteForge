@@ -1,31 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
 @import "tailwindcss";
 
-/* ---- Dark theme (default) ---- */
+/* ---- Light theme (default) ---- */
 :root,
-[data-theme="dark"] {
-  --bg-primary: #0a0a0b;
-  --bg-secondary: #141416;
-  --bg-tertiary: #1c1c1f;
-  --bg-card: #18181b;
-  --bg-card-hover: #222226;
-  --border-subtle: #27272a;
-  --border-default: #3f3f46;
-  --text-primary: #fafafa;
-  --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
-  --text-link-hover: #fafafa;
-  --accent: #a78bfa;
-  --accent-hover: #c4b5fd;
-  --accent-muted: rgba(167, 139, 250, 0.15);
-  --success: #22c55e;
-  --warning: #eab308;
-  --radius: 0.75rem;
-  --radius-sm: 0.5rem;
-  --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
-}
-
-/* ---- Light theme (base: #f6e9d7) ---- */
 [data-theme="light"] {
   --bg-primary: #f6e9d7;
   --bg-secondary: #efe0cc;
@@ -48,15 +25,45 @@
   --shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
 }
 
+/* ---- Dark theme ---- */
+[data-theme="dark"] {
+  --bg-primary: #0a0a0b;
+  --bg-secondary: #141416;
+  --bg-tertiary: #1c1c1f;
+  --bg-card: #18181b;
+  --bg-card-hover: #222226;
+  --border-subtle: #27272a;
+  --border-default: #3f3f46;
+  --text-primary: #fafafa;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --text-link-hover: #fafafa;
+  --accent: #a78bfa;
+  --accent-hover: #c4b5fd;
+  --accent-muted: rgba(167, 139, 250, 0.15);
+  --success: #22c55e;
+  --warning: #eab308;
+  --radius: 0.75rem;
+  --radius-sm: 0.5rem;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
 @layer base {
   html {
     font-family: 'DM Sans', 'Poppins', system-ui, sans-serif;
+    transition: background-color 0.35s ease, color 0.35s ease;
   }
 
   body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
     overflow-x: hidden;
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+
+  /* Smooth theme transition for all theme-dependent colors */
+  [data-theme] * {
+    transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
   }
 
   body::-webkit-scrollbar {
@@ -81,12 +88,14 @@
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
+    transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
   }
   .input-dark {
     background: var(--bg-tertiary);
     border: 1px solid var(--border-subtle);
     color: var(--text-primary);
     border-radius: var(--radius-sm);
+    transition: background-color 0.35s ease, border-color 0.35s ease, color 0.35s ease;
   }
   .input-dark::placeholder {
     color: var(--text-muted);
